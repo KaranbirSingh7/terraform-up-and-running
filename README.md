@@ -8,11 +8,13 @@ A repo to keep track of my progress from book "Terraform Up and Running"
 
 
 **Where does terraform store state?**
+
 Defaults to localfilesystem as `terraform.tf.state`. It can be used with other backends such as s3, azure blob and google storage. 
 You would run into chicken-egg problem where backend doesn't exist in cloud provider. This case you would need two terraform scripts/modules. One to initialize backend, second to use that backend and make it as source of truth.
 
 
 **Can I lock terraform state remotely?**
+
 Yes, but you want to use another cloud resource. In AWS case, you use `dynamo_db` with a column called `LockID`
 
 
