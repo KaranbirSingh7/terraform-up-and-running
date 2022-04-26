@@ -15,7 +15,7 @@ You would run into chicken-egg problem where backend doesn't exist in cloud prov
 
 **Can I lock terraform state remotely?**
 
-Yes, but you want to use another cloud resource. In AWS case, you use `dynamo_db` with a column called `LockID`
+Yes, but you would have to use another cloud resource. In AWS case, you use `dynamo_db` with a column called `LockID`
 
 
 
