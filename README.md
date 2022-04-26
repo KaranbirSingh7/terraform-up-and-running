@@ -4,14 +4,32 @@ A repo to keep track of my progress from book "Terraform Up and Running"
 
 ## Terraform Cheatsheet
 
+If you don't like HCL (HashiCorp Configuration Language), you can also write terraform in JSON with extension as `main.tf.json`
+
 String interpolation using `${...}`:
-```bash
+```hcl
     user_data = <<-EOF
                 #!/bin/bash
                 echo "hello world" > index.html
                 nohup busybox httpd -f -p ${var.server_port} &
                 EOF
 ```
+
+
+Every resource in terraform supports `lifecycle` method.
+This takes care of create/update/delete of resource.
+Scenario: Delete resource only if new one is created successfully and is stable.
+```hcl
+resource "aws_ec2" "example" {
+    ami = "xXXXxx"
+
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+```
+
 
 
 
