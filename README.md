@@ -73,3 +73,49 @@ terraform output
 # terraform output <VARIABLE-NAME>
 terraform output public_ip
 ```
+
+**Production Grade Terraform Module Folder Structure**
+```bash
+├── examples
+│   └── minimal.tf
+├── test
+│   └── main_test.go
+├── main.tf
+├── outputs.tf
+└── variables.tf
+```
+
+**Provisioners: remote-exec, local-exec**
+```hcl
+# remote-exec inside resource, would only works when terraform is running
+resource "aws_instance" "example" {
+  ami                    = "ami-0c55b159cbfafe1f0"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.instance.id]
+  key_name               = aws_key_pair.generated_key.key_name
+
+  provisioner "remote-exec" {
+    inline = ["echo \"Hello, World from $(uname -smp)\""]
+  }
+
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ubuntu"
+    private_key = tls_private_key.example.private_key_pem
+  }
+}
+```
+```hcl
+# local-exec as seperate block that runs everytime on 'terraform apply'
+resource "null_resource" "example" {
+  # Use UUID to force this null_resource to be recreated on every call to 'terraform apply'
+  triggers = {
+    uuid = uuid()
+  }
+  provisioner "local-exec" {
+    command = "echo \"Hello, World from $(uname -smp)\""
+  }
+}
+```
+
