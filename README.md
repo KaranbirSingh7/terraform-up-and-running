@@ -148,5 +148,17 @@ output "test" {
 }
 
 
+# OUTPUT
+test = [
+  {
+    "email" = "abc@gmail.com"
+    "object_id" = "123"
+  },
+  {
+    "email" = "efg@gmail.com"
+    "object_id" = "456"
+  },
+]
+
 ```
 
