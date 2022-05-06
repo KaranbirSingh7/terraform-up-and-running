@@ -119,3 +119,34 @@ resource "null_resource" "example" {
 }
 ```
 
+
+**for_each loop over map and generate list for roles/user**
+```hcl
+# this logic comes in handy when you want to add multiple users to a single role
+# ex: add multiple users with Contributor access to Azure Resource Group
+
+locals {
+  users = [
+    {
+      "user_name" : "abc@gmail.com"
+      "principal_id" : "123"
+    },
+    {
+      "user_name" : "efg@gmail.com"
+      "principal_id" : "456"
+    }
+  ]
+
+}
+
+output "test" {
+  value = [for u in local.users : {
+    # "APIM contributor" : {
+    email     = u.user_name
+    object_id = u.principal_id
+  }]
+}
+
+
+```
+
