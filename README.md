@@ -178,3 +178,15 @@ region         = "us-east-2"
 dynamodb_table = "terraform-up-and-running-locks"
 encrypt        = true
 ```
+
+**Internet connection drops in middle of terraform deployment**
+If this happens, terraform will create a local file named errored.tfstate which can be pushed to remote manually once connectivity is restored.
+```sh
+terrform state push errored.tfstate
+```
+
+**Forcefully remove terraform lock on remote**
+``sh
+terraform force-unlock <LOCK_ID>
+``
+
