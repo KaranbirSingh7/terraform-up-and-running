@@ -186,7 +186,7 @@ terrform state push errored.tfstate
 ```
 
 **Forcefully remove terraform lock on remote**
-``sh
+```sh
 terraform force-unlock <LOCK_ID>
-``
+```
 
